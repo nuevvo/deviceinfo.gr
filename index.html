@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
         <title>DeviceInfo.gr | Πληροφορίες συσκευής</title>
         <style>
-            body {font-family:Helvetica, Arial, sans-serif;line-height:150%;margin:0;padding:0;background:#fafafa;border-top:3px solid #7952b3;}
-            p {padding:5px 0;margin:0;}
+            body {font-family:Helvetica, Arial, sans-serif;line-height:130%;margin:0;padding:0;background:#fafafa;border-top:3px solid #7952b3;}
+            p {padding:5px 0;margin:0;font-size:0.88rem;}
             ul {list-style:none;padding:5px 0;margin:0;}
             ul li {padding:5px 0;margin:0;}
             h1, h2, h3, h4 {line-height:120%;padding:5px 0;margin:0;}
-            h1 {background:url(./assets/svg/laptop.svg) no-repeat 0 50%;background-size:30px 30px;line-height:1;padding:0 0 0 45px;margin-bottom:15px;vertical-align:middle;}
+            h1 {background:url(./assets/svg/laptop.svg) no-repeat 0 50%;background-size:30px 30px;line-height:1;padding:0 0 0 45px;margin-bottom:15px;}
             h2 {padding:0 0 5px;margin:0 0 10px;border-bottom:2px solid #dadada;line-height:120%;}
             h3 {font-size:0.94rem;font-weight:normal;}
             button {background:#7952b3;color:#fff;padding:5px 15px;border-radius:5px;border:0;font-size:0.9rem;line-height:120%;}
@@ -19,7 +19,8 @@
                 header {margin:0;padding:15px;text-align:right;}
                     header a {display:inline-block;}
                 main {display:grid;grid-template-columns:1fr 3fr;grid-gap:15px;margin:0 0 15px;}
-                    .about {display:grid;grid-template-columns:1fr;grid-template-rows:auto auto 100%;grid-gap:30px;align-items:start;padding:15px;}
+                    .about {display:grid;grid-template-columns:1fr;grid-template-rows:auto auto 100%;grid-gap:15px;align-items:start;padding:15px;}
+                        .about .info p {font-size:0.8rem;color:#606060;}
                         .about .copy,
                         .about .share {padding:15px 0;display:grid;grid-template-columns:1fr;grid-gap:5px;align-items:center;border-top:2px solid #dadada;}
                     .details {background:#fff;padding:15px;border-radius:10px;}
@@ -27,6 +28,7 @@
 
             @media only screen and (max-width:768px) {
                 h1 {background:url(./assets/svg/phone.svg) no-repeat 0 50%;background-size:contain;}
+                h2 {font-size:1.4rem;}
                 header {padding:15px 15px 5px;}
                 main {grid-template-columns:1fr;}
                     .about {grid-template-rows:auto auto auto;grid-gap:0;}
@@ -44,16 +46,16 @@
                 <div class="about">
                     <div class="info">
                         <h1>DeviceInfo.gr</h1>
-                        <p>Some info here.</p>
+                        <p>Μοιραστείτε εύκολα &amp; ανώνυμα τις πληροφορίες της συσκευής σας με web developers και designers. Αυτές οι πληροφορίες μπορούν να χρησιμοποιηθούν για τη βελτίωση ιστοσελίδων και web εφαρμογών που επισκέπτεστε συχνά. Η διεύθυνση IP της συσκευής δεν μοιράζεται ποτέ.</p>
                     </div>
                     <div class="copy">
-                        <p>Αντιγράψτε τις πληροφορίες συσκευής σε απλό κείμενο (π.χ. για χρήση σε email)</p>
+                        <p>Αντιγράψτε τις πληροφορίες της συσκευής σας σε απλό κείμενο (π.χ. για χρήση σε email)</p>
                         <div>
                             <button>ΑΝΤΙΓΡΑΦΗ ΠΛΗΡΟΦΟΡΙΩΝ</button>
                         </div>
                     </div>
                     <div class="share">
-                        <p>Αντιγράψτε τις πληροφορίες της συσκευής σας σε ένα σύνδεσμο (URL) που μπορείτε να μοιραστείτε με τρίτους</p>
+                        <p>Μοιραστείτε με τρίτους τις πληροφορίες της συσκευής σας σε ένα σύνδεσμο (URL)</p>
                         <div>
                             <button>ΑΝΤΙΓΡΑΦΗ ΣΥΝΔΕΣΜΟΥ</button>
                         </div>
@@ -73,6 +75,7 @@
             /* To Do:
                 - Add self-hosted web fonts (?), favicon & some SVG icons for visual brevity
                 - Provide a GitHub URL for feedback - no direct visible credits
+                - Basic analytics only
                 - Provide in Greek & English - auto switch language perhaps based on visitor's browser language
                 - Allow copying data (to paste in email - so format accordingly & add link back to deviceinfo.gr to spread the word)
                 - Create URL for sharing which uses the current UA as URL param - if the UA exists as URL param, decode it (also display in <input> to manually copy)
@@ -88,13 +91,13 @@
             var parser = new UAParser();
             var result = parser.getResult();
             var deviceDetails = {
-                'Browser Name': result.browser.name,
-                'Browser Version': result.browser.version,
-                'OS Name': result.os.name,
-                'OS Version': result.os.version,
-                'Screen Size': window.screen.width + ' x ' + window.screen.height,
-                'Browser Window Size': window.innerWidth + ' x ' + window.innerHeight,
-                'User Agent': result.ua
+                'Όνομα Browser': result.browser.name,
+                'Έκδοση Browser': result.browser.version,
+                'Λειτουργικό Σύστημα': result.os.name,
+                'Έκδοση Λειτουργικού Συστ/τος': result.os.version,
+                'Διαστάσεις Οθόνης': window.screen.width + ' x ' + window.screen.height,
+                'Διαστάσεις Browser': window.innerWidth + ' x ' + window.innerHeight,
+                'Κωδικοποιημένες Πληροφορίες Browser': result.ua
             }
             let devContainer = document.getElementById('device');
             let devProps = [];
@@ -108,9 +111,9 @@
             let ipLocProps = [];
             fetch('https://ipv4.myip.wtf/json').then(response => response.json()).then(function(data) {
                 var location = data.YourFuckingLocation.split(',');
-                ipLocProps.push('<li>IP Address</span>: <b>' + data.YourFuckingIPAddress + '</b></li>');
-                ipLocProps.push('<li>Location: <b>' + location[0] + ', ' + data.YourFuckingCountryCode + '</b></li>');
-                ipLocProps.push('<li>ISP: <b>' + data.YourFuckingISP + '</b></li>');
+                ipLocProps.push('<li>Διεύθυνση IP</span>: <b>' + data.YourFuckingIPAddress + '</b></li>');
+                ipLocProps.push('<li>Πάροχος: <b>' + data.YourFuckingISP + '</b></li>');
+                ipLocProps.push('<li>Τοποθεσία: <b>' + location[0] + ', ' + data.YourFuckingCountryCode + '</b></li>');
                 ipLocContainer.innerHTML = '<ul>' + ipLocProps.join('') + '</ul>';
             });
         </script>
