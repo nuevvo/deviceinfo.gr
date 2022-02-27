@@ -101,37 +101,56 @@
             var month = ((d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1));
             var timestamp = d.getFullYear() + '' + month + '' + d.getDate() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
 
+            // Check for shareable device info
+            var deviceFromUrl, locationFromUrl;
+            var qs = window.location.search;
+            if (qs.indexOf('?info=') > -1) {
+                var urlParams = new URLSearchParams(qs);
+                deviceFromUrl = JSON.parse(decodeURIComponent(urlParams.get('info')));
+                locationFromUrl = decodeURIComponent(urlParams.get('location'));
+            }
+
             // Device
             var parser = new UAParser();
-            var result = parser.getResult();
-            var deviceDetails = {
-                'Όνομα Browser': result.browser.name,
-                'Έκδοση Browser': result.browser.version,
-                'Λειτουργικό Σύστημα': result.os.name,
-                'Έκδοση Λειτουργικού Συστ/τος': result.os.version,
-                'Διαστάσεις Οθόνης': window.screen.width + ' x ' + window.screen.height,
-                'Διαστάσεις Παραθύρου Browser': window.innerWidth + ' x ' + window.innerHeight,
-                'Κωδικοποιημένες Πληροφορίες Browser': result.ua
+            var device = parser.getResult();
+            device.screensize = window.screen.width + ' x ' + window.screen.height;
+            device.browsersize = window.innerWidth + ' x ' + window.innerHeight;
+            if (deviceFromUrl) {
+                device = deviceFromUrl;
             }
-            let devContainer = document.getElementById('device');
-            let devProps = [];
+            var deviceDetails = {
+                'Όνομα Browser': device.browser.name,
+                'Έκδοση Browser': device.browser.version,
+                'Λειτουργικό Σύστημα': device.os.name,
+                'Έκδοση Λειτουργικού Συστ/τος': device.os.version,
+                'Διαστάσεις Οθόνης': device.screensize,
+                'Διαστάσεις Παραθύρου Browser': device.browsersize,
+                'Κωδικοποιημένες Πληροφορίες Browser': device.ua
+            }
+            var devContainer = document.getElementById('device');
+            var devProps = [];
             for (var key in deviceDetails) {
                 devProps.push('<li>' + key + ': <b>' + deviceDetails[key] + '</b></li>');
             }
             devContainer.innerHTML = '<ul>' + devProps.join('') + '</ul>';
 
             // IP - Location
-            let ipLocContainer = document.getElementById('iplocation');
-            let ipLocProps = [];
-            fetch('https://ipv4.myip.wtf/json').then(response => response.json()).then(function(data) {
-                var location = data.YourFuckingLocation.split(',');
-                ipLocProps.push('<li>Διεύθυνση IP</span>: <b>' + data.YourFuckingIPAddress + '</b></li>');
-                ipLocProps.push('<li>Πάροχος: <b>' + data.YourFuckingISP + '</b></li>');
-                ipLocProps.push('<li id="location">Τοποθεσία: <b>' + location[0] + ', ' + data.YourFuckingCountryCode + '</b></li>');
+            var ipLocContainer = document.getElementById('iplocation');
+            var ipLocProps = [];
+            if (locationFromUrl) {
+                ipLocProps.push('<li id="location">Τοποθεσία: <b>' + locationFromUrl + '</b></li>');
                 ipLocContainer.innerHTML = '<ul>' + ipLocProps.join('') + '</ul>';
-            });
+            } else {
+                fetch('https://ipv4.myip.wtf/json').then(response => response.json()).then(function(data) {
+                    var location = data.YourFuckingLocation.split(',')[0] + ', ' + data.YourFuckingCountryCode;
+                    ipLocProps.push('<li>Διεύθυνση IP</span>: <b>' + data.YourFuckingIPAddress + '</b></li>');
+                    ipLocProps.push('<li>Πάροχος: <b>' + data.YourFuckingISP + '</b></li>');
+                    ipLocProps.push('<li id="location">Τοποθεσία: <b>' + location + '</b></li>');
+                    ipLocContainer.innerHTML = '<ul>' + ipLocProps.join('') + '</ul>';
+                });
+            }
 
-            // Buttons
+            // Copy device info
             document.getElementById('copyInfo').onclick = function(e) {
                 var devInfo = document.getElementById('device');
                 var devInfoAsText = devInfo.innerText || devInfo.textContent;
@@ -139,6 +158,15 @@
                 var locInfoAsText = locInfo.innerText || locInfo.textContent;
                 copyToClipboard(devInfoAsText + '\n' + locInfoAsText + '\n\nΕφαρμογή Πληροφοριών Συσκευής: https://deviceinfo.gr');
                 alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί στο πρόχειρο - μπορείτε να τις επικολλήσετε τώρα στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε...');
+            }
+
+            // Copy shareable URL
+            document.getElementById('shareLink').onclick = function(e) {
+                var locInfo = document.getElementById('location').getElementsByTagName('b')[0];
+                var locInfoAsText = locInfo.innerText || locInfo.textContent;
+                var link = window.location.href + '?info=' + encodeURIComponent(JSON.stringify(device)) + '&location=' + encodeURIComponent(locInfoAsText);
+                copyToClipboard(link);
+                alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί σε σύνδεσμο (URL) - μπορείτε να επικολλήσετε τώρα αυτό το σύνδεσμο στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε...');
             }
         </script>
 
