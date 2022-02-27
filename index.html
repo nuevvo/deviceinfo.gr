@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+        <title>DeviceInfo.gr | Device information for your site visitors</title>
+        <style>
+            body {font-family:Helvetica, Arial, sans-serif;margin:0;padding:0;background:#fafafa;}
+
+            ul {list-style:none;padding:15px 0;margin:0;}
+            ul li {padding:5px 0;margin:0;}
+
+            h1 {}
+            .capitalize {text-transform:capitalize;}
+
+            .container {max-width:1200px;padding:0 15px;margin:0 auto;}
+                main {display:grid;grid-template-columns:1fr 3fr;grid-gap:30px;margin:30px 0;padding:30px;background:#fff;}
+                    .about {}
+                    .details {display:grid;grid-template-columns:2fr;grid-gap:30px;}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <main>
+                <div class="about">
+                    <h1>User Details</h1>
+                    <p>Some info here.</p>
+                    <hr />
+                    <h3>Copy Details</h3>
+                    <button>Copy</button>
+                    <hr />
+                    <h3>Share Link</h3>
+                    <button>Share</button>
+                </div>
+                <div class="details">
+                    <div>
+                        <h2>Device Details</h2>
+                        <div id="device"></div>
+                    </div>
+                    <div>
+                        <h2>IP / Location</h2>
+                        <div id="iplocation"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.2/src/ua-parser.min.js"></script>
+        <script>
+
+            /* To Do:
+              - Design: Title and details/credits on the left, device details & IP on the right (verticaly)
+              - Allow copying data
+              - Create URL for sharing which uses the current UA as URL param - if the UA exists as URL param, decode it
+            */
+
+            // Get current date & time
+            var d = new Date();
+            var month = ((d.getMonth()+1) < 10 ? '0'+(d.getMonth()+1) : (d.getMonth()+1));
+            var timestamp = d.getFullYear() + '' + month + '' + d.getDate() + '' + d.getHours() + '' + d.getMinutes() + '' + d.getSeconds();
+
+            // Device
+            var parser = new UAParser();
+            var result = parser.getResult();
+            var deviceDetails = {
+                'User Agent': result.ua,
+                'Browser Name': result.browser.name,
+                'Browser Version': result.browser.version,
+                'OS Name': result.os.name,
+                'OS Version': result.os.version,
+                'Screen Size': window.screen.width + ' x ' + window.screen.height
+            }
+            //console.info(deviceDetails);
+            let devContainer = document.getElementById('device');
+            let devProps = [];
+            for (var key in deviceDetails) {
+                devProps.push('<li>' + key + ': <b>' + deviceDetails[key] + '</b></li>');
+            }
+            devContainer.innerHTML = '<ul>' + devProps.join('') + '</ul>';
+
+            // IP - Location
+            let ipLocContainer = document.getElementById('iplocation');
+            let ipLocProps = [];
+            fetch('https://ipv4.myip.wtf/json').then(response => response.json()).then(function(data) {
+                ipLocProps.push('<li>IP Address</span>: <b>' + data.YourFuckingIPAddress + ' (' + data.YourFuckingCountryCode +') </b></li>');
+                ipLocProps.push('<li>ISP: <b>' + data.YourFuckingISP + '</b></li>');
+                ipLocContainer.innerHTML = '<ul>' + ipLocProps.join('') + '</ul>';
+            });
+
+        </script>
+    </body>
+</html>
