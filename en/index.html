@@ -64,7 +64,7 @@
                     <div class="share">
                         <p>Get a shareable URL for your device info which you can share with others</p>
                         <div>
-                            <button id="shareLink">SHARE LINK</button>
+                            <button id="copyLink">COPY LINK</button>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
             }
 
             // Copy shareable URL
-            document.getElementById('shareLink').onclick = function(e) {
+            document.getElementById('copyLink').onclick = function(e) {
                 var locInfo = document.getElementById('location').getElementsByTagName('b')[0];
                 var locInfoAsText = locInfo.innerText || locInfo.textContent;
                 var link = window.location.href + '?info=' + encodeURIComponent(JSON.stringify(device)) + '&location=' + encodeURIComponent(locInfoAsText);
