@@ -13,7 +13,7 @@
             h1 {background:url(./assets/svg/laptop.svg) no-repeat 0 50%;background-size:30px 30px;line-height:1;padding:0 0 0 45px;margin-bottom:15px;}
             h2 {padding:0 0 5px;margin:0 0 10px;border-bottom:2px solid #dadada;line-height:120%;}
             h3 {font-size:0.94rem;font-weight:normal;}
-            button {background:#6528c1;color:#fff;padding:5px 15px;border-radius:5px;border:0;font-size:0.9rem;line-height:120%;}
+            button {background:#6528c1;color:#fff;padding:5px 15px;border-radius:5px;border:0;font-size:0.9rem;line-height:120%;cursor:pointer;}
 
             .container {max-width:1200px;padding:0 15px;margin:0 auto;}
                 header {margin:0;padding:15px;text-align:right;}
@@ -52,13 +52,13 @@
                     <div class="copy">
                         <p>Αντιγράψτε τις πληροφορίες της συσκευής σας σε απλό κείμενο (π.χ. για χρήση σε email)</p>
                         <div>
-                            <button>ΑΝΤΙΓΡΑΦΗ ΠΛΗΡΟΦΟΡΙΩΝ</button>
+                            <button id="copyInfo">ΑΝΤΙΓΡΑΦΗ ΠΛΗΡΟΦΟΡΙΩΝ</button>
                         </div>
                     </div>
                     <div class="share">
                         <p>Μοιραστείτε με τρίτους τις πληροφορίες της συσκευής σας σε ένα σύνδεσμο (URL)</p>
                         <div>
-                            <button>ΑΝΤΙΓΡΑΦΗ ΣΥΝΔΕΣΜΟΥ</button>
+                            <button id="shareLink">ΑΝΤΙΓΡΑΦΗ ΣΥΝΔΕΣΜΟΥ</button>
                         </div>
                     </div>
                 </div>
@@ -74,6 +74,7 @@
         <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.2/src/ua-parser.min.js"></script>
         <script>
             /* To Do:
+                - Test on older devices
                 - Add self-hosted web fonts (?), favicon & some SVG icons for visual brevity
                 - Provide a GitHub URL for feedback - no direct visible credits
                 - Basic analytics only
@@ -82,6 +83,23 @@
                 - Create URL for sharing which uses the current UA as URL param - if the UA exists as URL param, decode it (also display in <input> to manually copy)
                 - Consider screenshot with canvas? https://serversideup.net/capturing-an-image-from-an-html5-canvas-or-video-element/
             */
+
+            function copyToClipboard(str) {
+                var el = document.createElement('textarea');
+                el.value = str;
+                el.setAttribute('readonly', '');
+                el.style.position = 'absolute';
+                el.style.left = '-9999px';
+                document.body.appendChild(el);
+                var selected = (document.getSelection().rangeCount > 0) ? document.getSelection().getRangeAt(0) : false;
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                if (selected) {
+                    document.getSelection().removeAllRanges();
+                    document.getSelection().addRange(selected);
+                }
+            }
 
             // Get current date & time (as timestamp)
             var d = new Date();
@@ -114,9 +132,19 @@
                 var location = data.YourFuckingLocation.split(',');
                 ipLocProps.push('<li>Διεύθυνση IP</span>: <b>' + data.YourFuckingIPAddress + '</b></li>');
                 ipLocProps.push('<li>Πάροχος: <b>' + data.YourFuckingISP + '</b></li>');
-                ipLocProps.push('<li>Τοποθεσία: <b>' + location[0] + ', ' + data.YourFuckingCountryCode + '</b></li>');
+                ipLocProps.push('<li id="location">Τοποθεσία: <b>' + location[0] + ', ' + data.YourFuckingCountryCode + '</b></li>');
                 ipLocContainer.innerHTML = '<ul>' + ipLocProps.join('') + '</ul>';
             });
+
+            // Buttons
+            document.getElementById('copyInfo').onclick = function(e) {
+                var devInfo = document.getElementById('device');
+                var devInfoAsText = devInfo.innerText || devInfo.textContent;
+                var locInfo = document.getElementById('location');
+                var locInfoAsText = locInfo.innerText || locInfo.textContent;
+                copyToClipboard(devInfoAsText + '\n' + locInfoAsText);
+                alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί στο πρόχειρο - μπορείτε να τις επικολλήσετε τώρα στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε...');
+            }
         </script>
     </body>
 </html>
