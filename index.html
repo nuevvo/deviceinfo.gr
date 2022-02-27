@@ -157,7 +157,7 @@
                 var locInfo = document.getElementById('location');
                 var locInfoAsText = locInfo.innerText || locInfo.textContent;
                 copyToClipboard(devInfoAsText + '\n' + locInfoAsText + '\n\Πηγή Πληροφοριών Συσκευής: https://deviceinfo.gr');
-                alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί στο πρόχειρο - μπορείτε να τις επικολλήσετε τώρα στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε...');
+                alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί στο πρόχειρο.\n\nΜπορείτε να τις επικολλήσετε τώρα στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε.');
             }
 
             // Copy shareable URL
@@ -166,7 +166,7 @@
                 var locInfoAsText = locInfo.innerText || locInfo.textContent;
                 var link = window.location.href + '?info=' + encodeURIComponent(JSON.stringify(device)) + '&location=' + encodeURIComponent(locInfoAsText);
                 copyToClipboard(link);
-                alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί σε σύνδεσμο (URL) - μπορείτε να επικολλήσετε τώρα αυτό το σύνδεσμο στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε...');
+                alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί σε σύνδεσμο (URL).\n\nΜπορείτε να επικολλήσετε τώρα αυτό το σύνδεσμο στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε.');
             }
         </script>
 
