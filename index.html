@@ -14,9 +14,9 @@
             .capitalize {text-transform:capitalize;}
 
             .container {max-width:1200px;padding:0 15px;margin:0 auto;}
-                header {margin:15px 0;padding:30px;text-align:right;}
+                header {margin:0;padding:30px;text-align:right;}
                     header a {display:inline-block;padding:5px;}
-                main {display:grid;grid-template-columns:1fr 3fr;grid-gap:30px;margin:15px 0;padding:30px;background:#fff;}
+                main {display:grid;grid-template-columns:1fr 3fr;grid-gap:30px;margin:0 0 15px;padding:30px;background:#fff;}
                     .about {}
                     .details {display:grid;grid-template-columns:2fr;grid-gap:30px;}
         </style>
@@ -53,7 +53,6 @@
         <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.2/src/ua-parser.min.js"></script>
         <script>
             /* To Do:
-                - Add usable window dimensions (browser window size)
                 - Provide a GitHub URL for feedback - no direct visible credits
                 - Provide in Greek & English - auto switch language perhaps based on visitor's browser language
                 - Allow copying data (to paste in email - so format accordingly & add link back to deviceinfo.gr to spread the word)
@@ -69,12 +68,13 @@
             var parser = new UAParser();
             var result = parser.getResult();
             var deviceDetails = {
-                'User Agent': result.ua,
                 'Browser Name': result.browser.name,
                 'Browser Version': result.browser.version,
                 'OS Name': result.os.name,
                 'OS Version': result.os.version,
-                'Screen Size': window.screen.width + ' x ' + window.screen.height
+                'Screen Size': window.screen.width + ' x ' + window.screen.height,
+                'Browser Window Size': window.innerWidth + ' x ' + window.innerHeight,
+                'User Agent': result.ua
             }
             let devContainer = document.getElementById('device');
             let devProps = [];
@@ -87,7 +87,9 @@
             let ipLocContainer = document.getElementById('iplocation');
             let ipLocProps = [];
             fetch('https://ipv4.myip.wtf/json').then(response => response.json()).then(function(data) {
-                ipLocProps.push('<li>IP Address</span>: <b>' + data.YourFuckingIPAddress + ' (' + data.YourFuckingCountryCode + ') </b></li>');
+                var location = data.YourFuckingLocation.split(',');
+                ipLocProps.push('<li>IP Address</span>: <b>' + data.YourFuckingIPAddress + '</b></li>');
+                ipLocProps.push('<li>Location: <b>' + location[0] + ', ' + data.YourFuckingCountryCode + '</b></li>');
                 ipLocProps.push('<li>ISP: <b>' + data.YourFuckingISP + '</b></li>');
                 ipLocContainer.innerHTML = '<ul>' + ipLocProps.join('') + '</ul>';
             });
