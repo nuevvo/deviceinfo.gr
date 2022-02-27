@@ -3,33 +3,35 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
-        <title>DeviceInfo.gr | Device information for your site visitors</title>
+        <title>DeviceInfo.gr | Πληροφορίες συσκευής</title>
         <style>
-            body {font-family:Helvetica, Arial, sans-serif;line-height:150%;margin:0;padding:0;background:#fafafa;}
-
+            body {font-family:Helvetica, Arial, sans-serif;line-height:150%;margin:0;padding:0;background:#fafafa;border-top:3px solid #7952b3;}
+            p {padding:5px 0;margin:0;}
             ul {list-style:none;padding:5px 0;margin:0;}
             ul li {padding:5px 0;margin:0;}
-
-            h1, h2, h3, h4 {line-height:120%;padding:5px 0 15px;margin:0;}
+            h1, h2, h3, h4 {line-height:120%;padding:5px 0;margin:0;}
+            h1 {background:url(./assets/svg/laptop.svg) no-repeat 0 50%;background-size:30px 30px;line-height:1;padding:0 0 0 45px;margin-bottom:15px;vertical-align:middle;}
             h2 {padding:0 0 5px;margin:0 0 10px;border-bottom:2px solid #dadada;line-height:120%;}
-            .capitalize {text-transform:capitalize;}
+            h3 {font-size:0.94rem;font-weight:normal;}
+            button {background:#7952b3;color:#fff;padding:5px 15px;border-radius:5px;border:0;font-size:0.9rem;line-height:120%;}
 
             .container {max-width:1200px;padding:0 15px;margin:0 auto;}
                 header {margin:0;padding:15px;text-align:right;}
                     header a {display:inline-block;}
                 main {display:grid;grid-template-columns:1fr 3fr;grid-gap:15px;margin:0 0 15px;}
-                    .about {display:grid;grid-template-columns:1fr;grid-template-rows:auto auto 100%;grid-gap:15px;align-items:start;padding:15px;}
+                    .about {display:grid;grid-template-columns:1fr;grid-template-rows:auto auto 100%;grid-gap:30px;align-items:start;padding:15px;}
+                        .about .copy,
+                        .about .share {padding:15px 0;display:grid;grid-template-columns:1fr;grid-gap:5px;align-items:center;border-top:2px solid #dadada;}
                     .details {background:#fff;padding:15px;border-radius:10px;}
                         #device {margin-bottom:15px;}
-            
+
             @media only screen and (max-width:768px) {
-                header {padding:15px 15px 0;}
+                h1 {background:url(./assets/svg/phone.svg) no-repeat 0 50%;background-size:contain;}
+                header {padding:15px 15px 5px;}
                 main {grid-template-columns:1fr;}
-                    .about {grid-template-rows:auto auto auto;}
-                    .about .info p {padding:5px 0;margin:0;}
-                    .about > div {}
-                    .about > div h3 {display:inline-block;padding:0;vertical-align:middle;}
-                    .about > div button {display:inline-block;vertical-align:middle;margin-left:15px;padding:5px 15px;}
+                    .about {grid-template-rows:auto auto auto;grid-gap:0;}
+                        .about .copy p,
+                        .about .share p {padding:0;}
             }
         </style>
     </head>
@@ -41,22 +43,26 @@
             <main>
                 <div class="about">
                     <div class="info">
-                        <h1>Device Info</h1>
+                        <h1>DeviceInfo.gr</h1>
                         <p>Some info here.</p>
                     </div>
                     <div class="copy">
-                        <h3>Copy Device Info</h3>
-                        <button>Copy</button>
+                        <p>Αντιγράψτε τις πληροφορίες συσκευής σε απλό κείμενο (π.χ. για χρήση σε email)</p>
+                        <div>
+                            <button>ΑΝΤΙΓΡΑΦΗ ΠΛΗΡΟΦΟΡΙΩΝ</button>
+                        </div>
                     </div>
                     <div class="share">
-                        <h3>Share Link</h3>
-                        <button>Share</button>
+                        <p>Αντιγράψτε τις πληροφορίες της συσκευής σας σε ένα σύνδεσμο (URL) που μπορείτε να μοιραστείτε με τρίτους</p>
+                        <div>
+                            <button>ΑΝΤΙΓΡΑΦΗ ΣΥΝΔΕΣΜΟΥ</button>
+                        </div>
                     </div>
                 </div>
                 <div class="details">
-                    <h2>Device</h2>
+                    <h2>Συσκευή</h2>
                     <div id="device"></div>
-                    <h2>IP &amp; Location</h2>
+                    <h2>Διεύθυνση IP &amp; Τοποθεσία</h2>
                     <div id="iplocation"></div>
                 </div>
             </main>
