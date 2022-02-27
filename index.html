@@ -79,17 +79,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.2/src/ua-parser.min.js"></script>
         <script>
-            /* To Do:
-                - Test on older devices
-                - Add self-hosted web fonts (?), favicon & some SVG icons for visual brevity
-                - Provide a GitHub URL for feedback - no direct visible credits
-                - Basic analytics only
-                - Provide in Greek & English - auto switch language perhaps based on visitor's browser language
-                - Allow copying data (to paste in email - so format accordingly & add link back to deviceinfo.gr to spread the word)
-                - Create URL for sharing which uses the current UA as URL param - if the UA exists as URL param, decode it (also display in <input> to manually copy)
-                - Consider screenshot with canvas? https://serversideup.net/capturing-an-image-from-an-html5-canvas-or-video-element/
-            */
-
             function copyToClipboard(str) {
                 var el = document.createElement('textarea');
                 el.value = str;
@@ -148,7 +137,7 @@
                 var devInfoAsText = devInfo.innerText || devInfo.textContent;
                 var locInfo = document.getElementById('location');
                 var locInfoAsText = locInfo.innerText || locInfo.textContent;
-                copyToClipboard(devInfoAsText + '\n' + locInfoAsText);
+                copyToClipboard(devInfoAsText + '\n' + locInfoAsText + '\nΕφαρμογή Πληροφοριών Συσκευής: https://deviceinfo.gr');
                 alert('Οι πληροφορίες συσκευής έχουν αντιγραφεί στο πρόχειρο - μπορείτε να τις επικολλήσετε τώρα στο μήνυμά σας προς το site που θέλετε να επικοινωνήσετε...');
             }
         </script>
