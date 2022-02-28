@@ -12,6 +12,8 @@
         <meta name="keywords" content="device info, device information, device details, browser info, browser information, browser details, what is my browser, site feedback" />
         <style>
             body {font-family:Helvetica, Arial, sans-serif;line-height:130%;margin:0;padding:0;background:#fafafa;border-top:3px solid #6528c1;}
+            a {color:#6528c1;}
+            a:hover {color:#b182f7;}
             p {padding:5px 0;margin:0;font-size:0.88rem;}
             ul {list-style:none;padding:5px 0;margin:0;}
             ul li {padding:5px 0 10px;margin:0;line-height:150%;}
@@ -31,6 +33,8 @@
                         .about .share {padding:15px 0;display:grid;grid-template-columns:1fr;grid-gap:5px;align-items:center;border-top:2px solid #dadada;}
                     .details {background:#fff;padding:15px;border-radius:10px;box-shadow:0 5px 10px rgba(0,0,0,0.2);}
                         #device {margin-bottom:15px;}
+                footer {padding:15px;}
+                    footer p {color:#909090;font-size:0.8rem;text-align:center;}
 
             @media only screen and (max-width:768px) {
                 ul li b {display:block;}
@@ -75,6 +79,9 @@
                     <div id="iplocation"></div>
                 </div>
             </main>
+            <footer>
+                <p>Last Update: 28/02/2022 - Report issues or suggest improvements on the project's <a rel="noopener" title="Feedback for DeviceInfo.gr" target="_blank" href="https://github.com/nuevvo/deviceinfo.gr/issues">GitHub Issues</a>.</p>
+            </footer>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.2/src/ua-parser.min.js"></script>
