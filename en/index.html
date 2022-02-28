@@ -127,7 +127,7 @@
             // Check for shareable device info
             var deviceFromUrl, locationFromUrl;
             var qs = window.location.search;
-            if (qs.indexOf('info=') > -1) {
+            if (qs.indexOf('?info=') > -1) {
                 var urlParams = new URLSearchParams(qs);
                 deviceFromUrl = JSON.parse(decodeURIComponent(urlParams.get('info')));
                 locationFromUrl = decodeURIComponent(urlParams.get('location'));
@@ -187,7 +187,11 @@
             document.getElementById('copyLink').onclick = function(e) {
                 var locInfo = document.getElementById('location').getElementsByTagName('b')[0];
                 var locInfoAsText = locInfo.innerText || locInfo.textContent;
-                var link = window.location.href + '?info=' + encodeURIComponent(JSON.stringify(device)) + '&location=' + encodeURIComponent(locInfoAsText);
+                var currentUrl = window.location.href;
+                if (currentUrl.indexOf('?') > -1) {
+                    currentUrl = currentUrl.split('?')[0];
+                }
+                var link = currentUrl + '?info=' + encodeURIComponent(JSON.stringify(device)) + '&location=' + encodeURIComponent(locInfoAsText);
                 copyToClipboard(link);
                 alert('Your device information has been copied into a shareable URL.\n\nYou can paste this URL in your message to the site owners you wish to contact and provide feedback.');
             }
