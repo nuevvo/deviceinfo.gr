@@ -127,7 +127,7 @@
             // Check for shareable device info
             var deviceFromUrl, locationFromUrl;
             var qs = window.location.search;
-            if (qs.indexOf('?info=') > -1) {
+            if (qs.indexOf('info=') > -1) {
                 var urlParams = new URLSearchParams(qs);
                 deviceFromUrl = JSON.parse(decodeURIComponent(urlParams.get('info')));
                 locationFromUrl = decodeURIComponent(urlParams.get('location'));
