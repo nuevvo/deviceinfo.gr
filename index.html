@@ -161,7 +161,7 @@
             var ipLocContainer = document.getElementById('iplocation');
             var ipLocProps = [];
             if (locationFromUrl) {
-                ipLocProps.push('<li id="location">Τοποθεσία: <b>' + locationFromUrl + '</b></li>');
+                ipLocProps.push('<li id="location">Τοποθεσία: <b>' + locationFromUrl.replace(/(<([^>]+)>)/gi, '') + '</b></li>');
                 ipLocContainer.innerHTML = '<ul>' + ipLocProps.join('') + '</ul>';
             } else {
                 fetch('https://ipv4.myip.wtf/json').then(response => response.json()).then(function(data) {
