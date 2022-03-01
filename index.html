@@ -153,7 +153,7 @@
             var devContainer = document.getElementById('device');
             var devProps = [];
             for (var key in deviceDetails) {
-                devProps.push('<li>' + key + ': <b>' + deviceDetails[key].replace(/(<([^>]+)>)/gi, '') + '</b></li>');
+                devProps.push('<li>' + key + ': <b>' + (deviceDetails[key] ? deviceDetails[key].replace(/(<([^>]+)>)/gi, '') : '') + '</b></li>');
             }
             devContainer.innerHTML = '<ul>' + devProps.join('') + '</ul>';
 
